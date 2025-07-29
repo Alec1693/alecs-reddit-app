@@ -1,17 +1,10 @@
 import './App.css';
 import Header from './Components/Header';
 import Searchbox from './Components/Searchbox';
-import Post from './Components/Posts/Post';
 import SubReddit from './Components/SubReddits/SubReddit';
-import { useSelector } from 'react-redux';
-import { postFeedData } from './Features/postsSlice';
+import PostFeed from './Components/Posts/PostFeed';
 
 function App() {
-  const posts = useSelector(postFeedData)
-
-  const handleClick = () => {
-    console.log(posts);
-  }
 
   return (
     <div className="App">
@@ -20,10 +13,9 @@ function App() {
         <Searchbox />
       </div>
       <div>
-        <Post />
+        <PostFeed />
         <SubReddit />
       </div>
-      <button onClick={handleClick}>Click</button>
     </div>
   );
 }
