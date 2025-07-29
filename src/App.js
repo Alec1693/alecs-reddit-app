@@ -1,23 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from './Components/Header';
+import Searchbox from './Components/Searchbox';
+import Post from './Components/Posts/Post';
+import SubReddit from './Components/SubReddits/SubReddit';
+import { useSelector } from 'react-redux';
+import { postFeedData } from './Features/postsSlice';
 
 function App() {
+  const posts = useSelector(postFeedData)
+
+  const handleClick = () => {
+    console.log(posts);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>
+        <Header />
+        <Searchbox />
+      </div>
+      <div>
+        <Post />
+        <SubReddit />
+      </div>
+      <button onClick={handleClick}>Click</button>
     </div>
   );
 }
