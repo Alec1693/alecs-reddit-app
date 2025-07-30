@@ -1,8 +1,10 @@
-export default function SubReddit(){
+export default function SubReddit({ sub }){
+    const { id, name, icon } = sub;
+
     return (
-        <div>
-            <img src={'https://via.placeholder.com/600x400'} alt="Sub" className="subreddit-image" />
-            <p>Sub Name</p>
+        <div id={id}>
+            <img src={icon} alt="Sub" className="subreddit-image" />
+            <p>{name}</p>
         </div>
     )
 }

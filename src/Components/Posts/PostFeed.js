@@ -24,3 +24,11 @@ export default function PostFeed(){
         </div>
     )
 }
+
+/*
+useEffect(() => {
+  if (Object.keys(byPostId).length === 0 && !loadingFeed && !failedFeed) {
+    dispatch(loadHomePageFeed());
+  }
+}, [dispatch, byPostId, loadingFeed, failedFeed]);
+*/

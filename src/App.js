@@ -1,8 +1,8 @@
 import './App.css';
 import Header from './Components/Header';
 import Searchbox from './Components/Searchbox';
-import SubReddit from './Components/SubReddits/SubReddit';
 import PostFeed from './Components/Posts/PostFeed';
+import SubRedditContainer from './Components/SubReddits/SubRedditContainer';
 
 function App() {
 
@@ -14,7 +14,7 @@ function App() {
       </div>
       <div>
         <PostFeed />
-        <SubReddit />
+        <SubRedditContainer />
       </div>
     </div>
   );

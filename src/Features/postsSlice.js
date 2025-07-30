@@ -40,7 +40,17 @@ export const postsSlice = createSlice({
             .addCase(loadHomePageFeed.fulfilled, (state, action) => {
                 state.isLoadingHomePageFeed = false;
                 state.failedtoLoadHomePageFeed = false;
-                state.byPostId = action.payload;
+                Object.entries(action.payload).forEach(([postId, post]) => {
+                    state.byPostId[post.id] = {
+                        id: post.id,
+                        title: post.title,
+                        thumbnail: post.thumbnail,
+                        commentCount: post.num_comments,
+                        upVotes: post.ups,
+                        downVotes: post.downs
+                    }
+                })
+                //map through payload object and assign id: id, title: title, thumbnail: thumbnail, commentCount: num_comments, upVotes: ups, downVotes: downs
             })
     }
 })
