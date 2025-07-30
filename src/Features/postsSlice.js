@@ -4,15 +4,14 @@ export const loadHomePageFeed = createAsyncThunk(
     'posts/loadHomePageFeed',
     async(_,thunkApi) => {
         try{
-            const response = await fetch('http://localhost:3000/api/reddit-top');
+            const response = await fetch('http://localhost:5000/api/reddit-top');
 
             if(!response.ok){
                 throw new Error(`HTTP error! status: ${response.status}`)
                 
             }
             const json = await response.json();
-            const posts = json.data.children.map((child) => child.data);
-            return posts;
+            return json;
             
         }catch(error){
             console.error('Fetch error:', error);
@@ -24,7 +23,7 @@ export const loadHomePageFeed = createAsyncThunk(
 export const postsSlice = createSlice({
     name: 'posts',
     initialState: {
-        byPostId: null,
+        byPostId: {},
         isLoadingHomePageFeed: false,
         failedtoLoadHomePageFeed: false
     },
@@ -42,7 +41,6 @@ export const postsSlice = createSlice({
                 state.isLoadingHomePageFeed = false;
                 state.failedtoLoadHomePageFeed = false;
                 state.byPostId = action.payload;
-                console.log(action.payload);
             })
     }
 })
