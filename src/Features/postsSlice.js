@@ -47,7 +47,9 @@ export const postsSlice = createSlice({
                         thumbnail: post.thumbnail,
                         commentCount: post.num_comments,
                         upVotes: post.ups,
-                        downVotes: post.downs
+                        downVotes: post.downs,
+                        mediaType: post.post_hint,
+                        url_overridden_by_dest: post.url_overridden_by_dest
                     }
                 })
                 //map through payload object and assign id: id, title: title, thumbnail: thumbnail, commentCount: num_comments, upVotes: ups, downVotes: downs

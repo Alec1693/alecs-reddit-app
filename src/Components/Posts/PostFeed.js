@@ -21,7 +21,7 @@ export default function PostFeed(){
         <div>
             <ul>
                 {Object.entries(feedData).map(([key, value]) => (
-                    <Post data={value}/>
+                    <Post id={key} data={value}/>
                 ))}
             </ul>
             <button onClick={handleClick}>Click</button>
