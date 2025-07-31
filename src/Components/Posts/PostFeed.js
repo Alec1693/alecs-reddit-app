@@ -9,10 +9,8 @@ export default function PostFeed(){
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(!loadingFeed && !failedFeed){
-            dispatch(loadHomePageFeed());
-        }
-    },[dispatch,loadingFeed,failedFeed])
+        dispatch(loadHomePageFeed());
+    },[])
 
     const handleClick = () => {
         console.log(feedData);
