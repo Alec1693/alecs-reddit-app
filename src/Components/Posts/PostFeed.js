@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { loadHomePageFeed, selectFeedData, isLoadingFeed, failedToLoadFeed } from "../../Features/postsSlice";
+import Post from "./Post";
 
 export default function PostFeed(){
     const feedData = useSelector(selectFeedData);
@@ -18,6 +19,11 @@ export default function PostFeed(){
     }
     return (
         <div>
+            <ul>
+                {Object.entries(feedData).map(([key, value]) => (
+                    <Post data={value}/>
+                ))}
+            </ul>
             <button onClick={handleClick}>Click</button>
         </div>
     )

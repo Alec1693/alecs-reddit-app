@@ -1,17 +1,17 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp, faArrowDown, faComment } from '@fortawesome/free-solid-svg-icons';
 
-export default function Post(){
+export default function Post({data}){
     return (
         <div className='post-container'>
             <div className='vote-section'>
                 <FontAwesomeIcon icon={faArrowUp} />
-                <p>Temp Vote Count</p> 
+                <p>{data.commenetCount}</p> 
                 <FontAwesomeIcon icon={faArrowDown} />
             </div>
             <div className='post-content'>
-                <h2>Post Title</h2>
-                <img src={'https://via.placeholder.com/600x400'} alt="Post" className="post-image" />
+                <h2>{data.title}</h2>
+                <img src={data.thumbnail} alt="Post" className="post-image" />
                 <FontAwesomeIcon icon={faComment} />
             </div>
         </div>
