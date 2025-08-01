@@ -12,7 +12,7 @@ function App() {
         <Header />
         <Searchbox />
       </div>
-      <div>
+      <div className='feed-category-layout'>
         <PostFeed />
         <SubRedditContainer />
       </div>

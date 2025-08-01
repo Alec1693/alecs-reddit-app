@@ -21,7 +21,7 @@ export const loadSubredditsList = createAsyncThunk(
 )
 
 export const subredditsSlice = createSlice({
-    name: 'subreddits',
+    name: 'subs',
     initialState: {
         bySubId: {},
         isLoadingSubs: false,
@@ -41,20 +41,19 @@ export const subredditsSlice = createSlice({
                 state.isLoadingSubs = false;
                 state.failedToLoadSubs = false;
                 //for getting sub names from api, the id of subreddit is "name", when querying the actual sub the id is "subreddit_id"
-                Object.entries(action.payload).forEach(([postId, post]) => {
-                    state.byPostId[post.id] = {
-                        id: post.name,
-                        name: post.display_name,
-                        icon: post.icon_img
+                Object.entries(action.payload).forEach(([subId, sub]) => {
+                    state.bySubId[sub.name] = {
+                        id: sub.name,
+                        name: sub.display_name,
+                        icon: sub.icon_img
                     }
                 })
             })
     }
 })
 
-
-export const selectSubList = (state) => state.posts.bySubId;
-export const isLoadingSubs = (state) => state.posts.isLoadingSubs;
-export const failedToLoadSubs = (state) => state.posts.failedToLoadSubs;
+export const selectSubList = (state) => state.subs.bySubId;
+export const isLoadingSubs = (state) => state.subs.isLoadingSubs;
+export const failedToLoadSubs = (state) => state.subs.failedToLoadSubs;
 
 export default subredditsSlice.reducer;

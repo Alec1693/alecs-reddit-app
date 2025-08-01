@@ -1,17 +1,17 @@
-import React from "react";
+import React, {useEffect} from "react";
 import SubReddit from "./SubReddit";
-import { selectSubList } from "../../Features/subredditsSlice";
-import { useSelector } from "react-redux";
+import { loadSubredditsList, selectSubList } from "../../Features/subredditsSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function SubRedditContainer(){
     const subs = useSelector(selectSubList);
-    const handleClick = () => {
-        console.log(subs)
-    }
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(loadSubredditsList())
+    },[])
+    
     return (
-        <button onClick={handleClick}>Click</button>
-    )
-    /* return (
         <ul className="subreddits-list">
             {
                 Object.values(subs).map((sub) => {
@@ -19,5 +19,5 @@ export default function SubRedditContainer(){
                 })
             }
         </ul>
-    ); */
+    );
 }

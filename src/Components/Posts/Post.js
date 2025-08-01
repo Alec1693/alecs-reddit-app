@@ -19,13 +19,3 @@ export default function Post({data}){
         </div>
     )
 }
-//vote count <span>{post.votes}</span>
-/*
- <div className="post-content">
-        <h2 className="post-title">{post.title}</h2>
-        {post.image && (
-          <img src={post.image} alt="Post" className="post-image" />
-        )}
-        <button className="comment-button">💬 {post.comments} Comments</button>
-      </div>
-*/

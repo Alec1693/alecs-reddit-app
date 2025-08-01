@@ -1,22 +1,18 @@
 import React, {useEffect} from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { loadHomePageFeed, selectFeedData, isLoadingFeed, failedToLoadFeed } from "../../Features/postsSlice";
+import { loadHomePageFeed, selectFeedData } from "../../Features/postsSlice";
 import Post from "./Post";
 
 export default function PostFeed(){
     const feedData = useSelector(selectFeedData);
-    const loadingFeed = useSelector(isLoadingFeed);
-    const failedFeed = useSelector(failedToLoadFeed);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(loadHomePageFeed());
+        if(Object.keys(feedData).length === 0){
+            dispatch(loadHomePageFeed());
+        }
     },[])
 
-    const handleClick = () => {
-        console.log(feedData);
-        console.log(`Loading Feed: ${loadingFeed}  Failed Feed: ${failedFeed}`)
-    }
     return (
         <div>
             <ul>
@@ -24,7 +20,6 @@ export default function PostFeed(){
                     <Post id={key} data={value}/>
                 ))}
             </ul>
-            <button onClick={handleClick}>Click</button>
         </div>
     )
 }
