@@ -1,3 +1,27 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.banner-container{
+    display: flex;
+    flex-direction: row;
+    height: 10vh;
+    width: 100%;
+    justify-content: space-around;
+    padding: 20px;
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* horizontal, vertical, blur, color */
+    text-align: center;
+    align-items: center;
+}
+
+.header-container{
+    width: 30%;
+}
+.searchbox-container{
+    width: 70%
+}
 .post-container{
     display: flex;
     flex-direction: row;
@@ -22,4 +46,8 @@
 .sub-tile,img{
     width: 25px;
     height: auto;
+}
+.post-feed-container{
+    width: 80vw;
+    height: 90vh;
 }

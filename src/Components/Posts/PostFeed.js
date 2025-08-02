@@ -14,7 +14,7 @@ export default function PostFeed(){
     },[])
 
     return (
-        <div>
+        <div className="post-feed-container">
             <ul>
                 {Object.entries(feedData).map(([key, value]) => (
                     <Post id={key} data={value}/>

@@ -8,9 +8,13 @@ function App() {
 
   return (
     <div className="App">
-      <div>
-        <Header />
-        <Searchbox />
+      <div className='banner-container'>
+        <div className='header-container'>
+          <Header />
+        </div>
+        <div className='searchbox-container'>
+          <Searchbox />
+        </div>
       </div>
       <div className='feed-category-layout'>
         <PostFeed />
