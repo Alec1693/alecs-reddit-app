@@ -17,8 +17,12 @@ function App() {
         </div>
       </div>
       <div className='feed-category-layout'>
-        <PostFeed />
-        <SubRedditContainer />
+        <div className='postfeed-container'>
+          <PostFeed />
+        </div>
+        <div className='subreddit-container'>
+          <SubRedditContainer />
+        </div>
       </div>
     </div>
   );
