@@ -12,9 +12,13 @@ export default function Post({data}){
             </div>
             <div className='post-content'>
                 <h2>{data.title}</h2>
-                {data.mediaType === 'image' ? <img src={data.thumbnail} alt="Post" className="post-image" /> : null}
-                <FontAwesomeIcon icon={faComment} />
-                <p>{data.commentCount}</p>
+                <div className='post-image-container'>
+                    {data.mediaType === 'image' ? <img src={data.thumbnail} alt="Post" className="post-image" /> : null}
+                </div>
+                <div className='comment-container'>
+                    <FontAwesomeIcon icon={faComment} />
+                    <p>{data.commentCount}</p>
+                </div>
             </div>
         </div>
     )

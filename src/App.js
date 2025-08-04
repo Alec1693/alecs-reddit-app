@@ -16,7 +16,7 @@ function App() {
           <Searchbox />
         </div>
       </div>
-      <div className='feed-category-layout'>
+      <div className='feed-layout'>
         <div className='postfeed-container'>
           <PostFeed />
         </div>
