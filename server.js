@@ -32,7 +32,7 @@ app.get('/api/reddit-top', async (req, res) => {
   }
 });
 
-app.get('/api/reddit-popular-subreddits', async (req, res) => {
+app.get('/api/:subreddit', async (req, res) => {
   try {
     const response = await fetch('https://www.reddit.com/subreddits/popular.json?limit=25');
 

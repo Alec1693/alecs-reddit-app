@@ -25,7 +25,15 @@ export const subredditsSlice = createSlice({
     initialState: {
         bySubId: {},
         isLoadingSubs: false,
-        failedToLoadSubs: false
+        failedToLoadSubs: false,
+        currentSub: 'pics'
+    },
+    reducers: {
+        updateCurrentSub: (state, action) => {
+            if(action.payload){
+                state.currentSub = action.payload;
+            }
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -55,5 +63,7 @@ export const subredditsSlice = createSlice({
 export const selectSubList = (state) => state.subs.bySubId;
 export const isLoadingSubs = (state) => state.subs.isLoadingSubs;
 export const failedToLoadSubs = (state) => state.subs.failedToLoadSubs;
+export const {updateCurrentSub} = subredditsSlice.actions;
+export const currentSub = (state) => state.subs.currentSub;
 
 export default subredditsSlice.reducer;
