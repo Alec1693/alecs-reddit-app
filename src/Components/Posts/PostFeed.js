@@ -1,19 +1,26 @@
 import React, {useEffect} from "react";
 import { useSelector, useDispatch } from 'react-redux';
-import { loadHomePageFeed, selectFeedData } from "../../Features/postsSlice";
+import { loadHomePageFeed  } from "../../Features/postsSlice";
 import Post from "./Post";
-import { currentSub } from "../../Features/subredditsSlice";
 
 export default function PostFeed(){
-    const feedData = useSelector(selectFeedData);
+    const feedData = useSelector((state) => state.posts.byPostId);
     const dispatch = useDispatch();
-    const sub = useSelector(currentSub);
+    const sub = useSelector((state) => state.subs.currentSub);
 
     useEffect(() => {
         if(sub){
-            dispatch(loadHomePageFeed());
+            dispatch(loadHomePageFeed(sub));
         }
     },[dispatch,sub])
+
+    if(!feedData){
+        return (
+            <div className="post-feed-container">
+                <p>Loading Reddit Feed</p>
+            </div>
+        )
+    }
 
     return (
         <div className="post-feed-container">
@@ -25,11 +32,3 @@ export default function PostFeed(){
         </div>
     )
 }
-
-/*
-useEffect(() => {
-  if (Object.keys(byPostId).length === 0 && !loadingFeed && !failedFeed) {
-    dispatch(loadHomePageFeed());
-  }
-}, [dispatch, byPostId, loadingFeed, failedFeed]);
-*/

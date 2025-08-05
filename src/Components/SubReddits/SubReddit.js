@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from "react-redux"
-import { updateCurrentSub, currentSub } from "../../Features/subredditsSlice";
+import { useDispatch } from "react-redux"
+import { updateCurrentSub } from "../../Features/subredditsSlice";
 
 export default function SubReddit({ sub }){
     const dispatch = useDispatch();
