@@ -1,15 +1,17 @@
 const express = require('express');
 const cors = require('cors');
+const router = express.Router();
 
 const app = express();
 const PORT = 5000;
 
 app.use(cors());
 
-app.get('/api/reddit-top', async (req, res) => {
+app.get('/api/:subreddit', async (req, res) => {
+  const {subreddit} = req.params;
+  
   try {
-    const response = await fetch('https://www.reddit.com/top.json');
-
+    const response = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
 
     if(!response.ok){
       console.error(`Reddit API returned status ${response.status}`);

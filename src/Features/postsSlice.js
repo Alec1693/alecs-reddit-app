@@ -2,9 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const loadHomePageFeed = createAsyncThunk(
     'posts/loadHomePageFeed',
-    async(_,thunkApi) => {
+    async(subreddit,thunkApi) => {
         try{
-            const response = await fetch('http://localhost:5000/api/reddit-top');
+            const response = await fetch(`http://localhost:5000/api/${subreddit}`);
 
             if(!response.ok){
                 throw new Error(`HTTP error! status: ${response.status}`)
@@ -40,8 +40,9 @@ export const postsSlice = createSlice({
             .addCase(loadHomePageFeed.fulfilled, (state, action) => {
                 state.isLoadingHomePageFeed = false;
                 state.failedtoLoadHomePageFeed = false;
+                const newPostId = {};
                 Object.entries(action.payload).forEach(([postId, post]) => {
-                    state.byPostId[post.id] = {
+                    newPostId[post.id] = {
                         id: post.id,
                         title: post.title,
                         thumbnail: post.thumbnail,
@@ -52,6 +53,7 @@ export const postsSlice = createSlice({
                         url_overridden_by_dest: post.url_overridden_by_dest
                     }
                 })
+                state.byPostId = newPostId;
                 //map through payload object and assign id: id, title: title, thumbnail: thumbnail, commentCount: num_comments, upVotes: ups, downVotes: downs
             })
     }
