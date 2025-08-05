@@ -1,10 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { currentSub } from "./subredditsSlice";
 
 export const loadHomePageFeed = createAsyncThunk(
     'posts/loadHomePageFeed',
     async(_,thunkApi) => {
         try{
-            const response = await fetch('http://localhost:5000/api/reddit-top');
+            const state = thunkApi.getState();
+            const subreddit = currentSub(state);
+            const response = await fetch(`http://localhost:5000/api/${subreddit}`);
 
             if(!response.ok){
                 throw new Error(`HTTP error! status: ${response.status}`)

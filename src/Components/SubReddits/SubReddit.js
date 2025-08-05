@@ -7,8 +7,7 @@ export default function SubReddit({ sub }){
 
     const handleClick = (value) => {
         //dispatch the subreddit name to the subredditSlice. We want to update the feed with the currently selected subreddit
-        dispatch(updateCurrentSub(value))
-        console.log(current)
+        dispatch(updateCurrentSub(value));
     }
 
     return (
