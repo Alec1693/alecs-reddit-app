@@ -2,16 +2,18 @@ import React, {useEffect} from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { loadHomePageFeed, selectFeedData } from "../../Features/postsSlice";
 import Post from "./Post";
+import { currentSub } from "../../Features/subredditsSlice";
 
 export default function PostFeed(){
     const feedData = useSelector(selectFeedData);
     const dispatch = useDispatch();
+    const sub = useSelector(currentSub);
 
     useEffect(() => {
-        if(Object.keys(feedData).length === 0){
+        if(sub){
             dispatch(loadHomePageFeed());
         }
-    },[])
+    },[dispatch,sub])
 
     return (
         <div className="post-feed-container">
