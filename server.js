@@ -35,6 +35,33 @@ app.get('/api/:subreddit', async (req, res) => {
 });
 
 app.get('/api/reddit-popular-subreddits', async (req, res) => {
+  const {subreddit} = req.params;
+  try {
+    const response = await fetch('https://www.reddit.com/r/${subreddit}/about.json');
+
+
+    if(!response.ok){
+      console.error(`Reddit API returned status ${response.status}`);
+      return res.status(response.status).json({error:'Failed to fetch Reddit data'});
+    }
+
+    const text = await response.text();
+
+    if(!text){
+      console.error('Empty response from Reddit API');
+      return res.status(500).json({error: 'Empty response from Reddit API'});
+    }
+
+    const json = JSON.parse(text);
+    const posts = json.data.children.map((child) => child.data);
+    res.json(posts);
+  } catch (err) {
+    console.error('Error fetching Reddit data:', err);
+    res.status(500).json({ error: 'Failed to fetch Reddit data' });
+  }
+});
+
+app.get('/api/reddit-subreddits-icon', async (req, res) => {
   try {
     const response = await fetch('https://www.reddit.com/subreddits/popular.json?limit=25');
 

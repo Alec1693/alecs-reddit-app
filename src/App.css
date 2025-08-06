@@ -123,3 +123,10 @@ html, body {
   max-width: 100%;
   height: auto;
 }
+
+.subreddit-image{
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  border-radius: 5px;
+}
