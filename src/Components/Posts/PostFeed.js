@@ -3,10 +3,21 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loadHomePageFeed  } from "../../Features/postsSlice";
 import Post from "./Post";
 
+function filterObjectBySearch(searchTerm, postsObject){
+    const postsArray = Object.values(postsObject);
+    if(searchTerm === ''){
+        return postsArray;
+    }
+    return postsArray.filter(post => post.title.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    );
+}
+
 export default function PostFeed(){
+    const term = useSelector((state) => state.posts.searchTerm);
     const feedData = useSelector((state) => state.posts.byPostId);
     const dispatch = useDispatch();
     const sub = useSelector((state) => state.subs.currentSub);
+    const postFeed = filterObjectBySearch(term, feedData)
 
     useEffect(() => {
         if(sub){
@@ -25,9 +36,9 @@ export default function PostFeed(){
     return (
         <div className="post-feed-container">
             <ul>
-                {Object.entries(feedData).map(([key, value]) => (
-                    <Post id={key} data={value}/>
-                ))}
+                {postFeed.map(post => 
+                    <Post key={post.id} id={post.id} data={post}/>
+                )}
             </ul>
         </div>
     )

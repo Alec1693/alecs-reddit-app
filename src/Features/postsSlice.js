@@ -24,8 +24,14 @@ export const postsSlice = createSlice({
     name: 'posts',
     initialState: {
         byPostId: {},
+        searchTerm: '',
         isLoadingHomePageFeed: false,
         failedtoLoadHomePageFeed: false
+    },
+    reducers: {
+        setSearchTerm: (state, action) => {
+            state.searchTerm = action.payload;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -62,5 +68,6 @@ export const postsSlice = createSlice({
 export const selectFeedData = (state) => state.posts.byPostId;
 export const isLoadingFeed = (state) => state.posts.isLoadingHomePageFeed;
 export const failedToLoadFeed = (state) => state.posts.failedtoLoadHomePageFeed;
+export const {setSearchTerm} = postsSlice.actions;
 
 export default postsSlice.reducer;
