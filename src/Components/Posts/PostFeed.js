@@ -37,3 +37,11 @@ export default function PostFeed(){
         </div>
     )
 }
+
+/* export const selectFilteredPosts = (state, searchTerm) => {
+  const allPosts = Object.values(state.posts.byId); // 👉 returns an array
+  if (!searchTerm) return allPosts;
+  return allPosts.filter(post =>
+    post.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+}; */
