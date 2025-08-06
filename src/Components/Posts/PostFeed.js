@@ -7,6 +7,11 @@ export default function PostFeed(){
     const feedData = useSelector((state) => state.posts.byPostId);
     const dispatch = useDispatch();
     const sub = useSelector((state) => state.subs.currentSub);
+    const searchTerm = useSelector((state) => state.posts.searchTerm);
+
+    const filteredPosts = Object.values(feedData).filter((post) => 
+        post.title.toLowerCase//current hold up
+    )
 
     useEffect(() => {
         if(sub){
