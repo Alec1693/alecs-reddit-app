@@ -3,15 +3,21 @@ import { useSelector, useDispatch } from 'react-redux';
 import { loadHomePageFeed  } from "../../Features/postsSlice";
 import Post from "./Post";
 
+function filterObjectBySearch(searchTerm, postsObject){
+    const postsArray = Object.values(postsObject);
+    if(searchTerm === ''){
+        return postsArray;
+    }
+    return postsArray.filter(post => post.title.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    );
+}
+
 export default function PostFeed(){
+    const term = useSelector((state) => state.posts.searchTerm);
     const feedData = useSelector((state) => state.posts.byPostId);
     const dispatch = useDispatch();
     const sub = useSelector((state) => state.subs.currentSub);
-    const searchTerm = useSelector((state) => state.posts.searchTerm);
-
-    const filteredPosts = Object.values(feedData).filter((post) => 
-        post.title.toLowerCase//current hold up
-    )
+    const postFeed = filterObjectBySearch(term, feedData)
 
     useEffect(() => {
         if(sub){
@@ -30,18 +36,10 @@ export default function PostFeed(){
     return (
         <div className="post-feed-container">
             <ul>
-                {Object.entries(feedData).map(([key, value]) => (
-                    <Post id={key} data={value}/>
-                ))}
+                {postFeed.map(post => 
+                    <Post key={post.id} id={post.id} data={post}/>
+                )}
             </ul>
         </div>
     )
 }
-
-/* export const selectFilteredPosts = (state, searchTerm) => {
-  const allPosts = Object.values(state.posts.byId); // 👉 returns an array
-  if (!searchTerm) return allPosts;
-  return allPosts.filter(post =>
-    post.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-}; */

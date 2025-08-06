@@ -4,14 +4,14 @@ import { setSearchTerm } from '../Features/postsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function Searchbox(){
-    const dispatch = useDispatch();
     const searchTerm = useSelector((state) => state.posts.searchTerm);
-    const handleClick = (term) => {
-        dispatch(searchTerm(term))
+    const dispatch = useDispatch();
+    const handleChange = (e) => {
+        dispatch(setSearchTerm(e.target.value))
     }
     return (
         <div>
-            <input value={searchTerm} type="text" onChange={handleClick} placeholder="Search"></input>
+            <input value={searchTerm} type="text" onChange={handleChange} placeholder="Search"></input>
             <FontAwesomeIcon icon={faSearch} />
         </div>
     )

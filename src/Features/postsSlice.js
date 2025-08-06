@@ -68,6 +68,6 @@ export const postsSlice = createSlice({
 export const selectFeedData = (state) => state.posts.byPostId;
 export const isLoadingFeed = (state) => state.posts.isLoadingHomePageFeed;
 export const failedToLoadFeed = (state) => state.posts.failedtoLoadHomePageFeed;
-export const {setSearchTerm} = (state) => postsSlice.actions;
+export const {setSearchTerm} = postsSlice.actions;
 
 export default postsSlice.reducer;
