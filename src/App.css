@@ -12,22 +12,14 @@ html, body {
   height: 100vh;
 }
 
-.banner-container{
-    color: var(#3d5af1);
-    background: var(#fff);
+header{
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     height: 64px;
     padding: 0 64px;
-    grid-column: 1 / -1;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 16px;
-    align-content: center;
-}
-
-.header-container{
-    display: flex;
-    align-items: center;
+    grid-column: 1 / -1;
 }
 
 .logo{
@@ -46,9 +38,16 @@ html, body {
   width: 250px;
   max-width: 100%;
   border: none;
-  border-radius: 4px;
 }
 
+.searchbox-container input{
+  height: max-content;
+  flex-grow: 1;
+  border-radius: 4px;
+  height: max-content;
+  border: none;
+  background: #f3f3f3;
+} 
 .post-container{
   display: grid;
   grid-template-columns: 1fr 6fr;
@@ -81,6 +80,14 @@ html, body {
   margin: 0;
 }
 
+.logo p span{
+  color: #FF4500;
+}
+
+.logo p{
+  padding-left: 5px;
+}
+
 .feed-layout{
   display: grid;
   grid-template-columns: 3fr 1fr;
@@ -99,12 +106,17 @@ html, body {
 
 .subreddits-list{
   padding: 0;
-  font-size: 12px;
+  width: 5vw;
 }
 
 .sub-tile{
   display: grid;
   grid-template-columns: 1fr 4fr;
+  cursor: pointer;
+}
+
+.sub-tile:hover{
+  filter: brightness(85%);
 }
 .sub-tile img{
   display: flex;
@@ -112,6 +124,7 @@ html, body {
   justify-content: center;
   width: 20px;
   height: 100%;
+  padding-right: 5px;
 }
 
 .post-image-container{
@@ -129,4 +142,12 @@ html, body {
   height: 80%;
   object-fit: contain;
   border-radius: 5px;
+}
+
+.vote-section svg:hover{
+  cursor: pointer;
+}
+
+.comment-container svg:hover{
+  cursor: pointer;
 }

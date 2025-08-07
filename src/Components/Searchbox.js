@@ -10,7 +10,7 @@ export default function Searchbox(){
         dispatch(setSearchTerm(e.target.value))
     }
     return (
-        <div>
+        <div className='searchbox-container'>
             <input value={searchTerm} type="text" onChange={handleChange} placeholder="Search"></input>
             <FontAwesomeIcon icon={faSearch} />
         </div>
