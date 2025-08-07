@@ -20,12 +20,38 @@ export const loadSubredditsList = createAsyncThunk(
     }
 )
 
+export const loadSubredditIcons = createAsyncThunk(
+    'subreddits/loadSubredditIcons',
+    async(subNames,thunkApi) => {
+        try{
+            const iconData = await Promise.all(
+                subNames.map(async (name) => {
+                    const res = await fetch(`https://www.reddit.com/r/${name}/about.json`);
+                    if (!res.ok) throw new Error(`Failed to fetch ${name}`);
+                    const json = await res.json();
+                    const { icon_img, community_icon } = json.data;
+                    const rawIcon = community_icon || icon_img || '';
+                    const icon = rawIcon.split('?')[0].replace(/&amp;/g, '&') || null;
+                    return { [name]: icon}
+                })
+            );
+            console.log(subNames)
+            return iconData;
+        }catch(error){
+            console.error('Fetch error:', error);
+            return thunkApi.rejectWithValue(error.message);
+        }
+    }
+)
+
 export const subredditsSlice = createSlice({
     name: 'subs',
     initialState: {
         bySubId: {},
         isLoadingSubs: false,
         failedToLoadSubs: false,
+        isLoadingIcons: false,
+        failedToLoadIcons: false,
         currentSub: 'pics'
     },
     reducers: {
@@ -48,15 +74,35 @@ export const subredditsSlice = createSlice({
             .addCase(loadSubredditsList.fulfilled, (state, action) => {
                 state.isLoadingSubs = false;
                 state.failedToLoadSubs = false;
+                const newSubId = {};
                 //for getting sub names from api, the id of subreddit is "name", when querying the actual sub the id is "subreddit_id"
                 Object.entries(action.payload).forEach(([subId, sub]) => {
-                    state.bySubId[sub.name] = {
+                    newSubId[sub.name] = {
                         id: sub.name,
                         name: sub.display_name,
                         icon: sub.icon_img
                     }
                 })
+                state.bySubId = newSubId;
             })
+            .addCase(loadSubredditIcons.pending, (state) => {
+                state.isLoadingIcons = true;
+                state.failedToLoadIcons = false;
+            })
+            .addCase(loadSubredditIcons.rejected, (state) => {
+                state.isLoadingIcons = false;
+                state.failedToLoadIcons = true;
+            })
+            .addCase(loadSubredditIcons.fulfilled, (state, action) => {
+                state.isLoadingIcons = false;
+                state.failedToLoadIcons = false;
+                action.payload.forEach(({name, icon}) => {
+                    if(state.bySubId[name]){
+                        state.bySubId[name].icon = icon
+                    }
+                });
+            }) 
+            
     }
 })
 

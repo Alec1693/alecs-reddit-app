@@ -1,15 +1,21 @@
 import React, {useEffect} from "react";
 import SubReddit from "./SubReddit";
-import { loadSubredditsList, selectSubList } from "../../Features/subredditsSlice";
+import { loadSubredditIcons, loadSubredditsList } from "../../Features/subredditsSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function SubRedditContainer(){
-    const subs = useSelector(selectSubList);
+    const subs = useSelector((state) => state.subs.bySubId);
+    const names = useSelector((state) => state.subs.subNames);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(loadSubredditsList())
+        dispatch(loadSubredditIcons(names))
     },[])
+
+    if(!subs){
+        return (<p>Error Loading Subs</p>)
+    }
     
     return (
         <ul className="subreddits-list">
