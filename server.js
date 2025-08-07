@@ -34,7 +34,7 @@ app.get('/api/:subreddit', async (req, res) => {
   }
 });
 
-app.get('/api/reddit-sub-icons', async (req, res) => {
+app.get('/api/reddit-sub-icons/:subreddit', async (req, res) => {
   const {subreddit} = req.params;
   try {
     const response = await fetch(`https://www.reddit.com/r/${subreddit}/about.json`);
@@ -45,16 +45,17 @@ app.get('/api/reddit-sub-icons', async (req, res) => {
       return res.status(response.status).json({error:'Failed to fetch Reddit data'});
     }
 
-    const text = await response.text();
+    const json = await response.text();
 
-    if(!text){
-      console.error('Empty response from Reddit API');
-      return res.status(500).json({error: 'Empty response from Reddit API'});
+    const iconData = {
+      display_name: json.data.display_name,
+      icon_img: json.data.icon_img || json.data.community_icon || null,
+      title: json.data.title,
+      subscribers: json.data.subscribers
     }
+    res.json(iconData);
 
-    const json = JSON.parse(text);
-    const posts = json.data.children.map((child) => child.data);
-    res.json(posts);
+    
   } catch (err) {
     console.error('Error fetching Reddit data:', err);
     res.status(500).json({ error: 'Failed to fetch Reddit data' });

@@ -27,14 +27,15 @@ export const loadSubredditIcons = createAsyncThunk(
             const iconData = await Promise.all(
                 subNames.map(async (name) => {
                     const res = await fetch(`https://www.reddit.com/r/${name}/about.json`);
-                    if (!res.ok) throw new Error(`Faield to fetch ${name}`);
+                    if (!res.ok) throw new Error(`Failed to fetch ${name}`);
                     const json = await res.json();
                     const { icon_img, community_icon } = json.data;
-                    const icon = community_icon || icon_img || null;
-                    return { name: icon}
+                    const rawIcon = community_icon || icon_img || '';
+                    const icon = rawIcon.split('?')[0].replace(/&amp;/g, '&') || null;
+                    return { [name]: icon}
                 })
             );
-
+            console.log(subNames)
             return iconData;
         }catch(error){
             console.error('Fetch error:', error);
@@ -51,9 +52,7 @@ export const subredditsSlice = createSlice({
         failedToLoadSubs: false,
         isLoadingIcons: false,
         failedToLoadIcons: false,
-        currentSub: 'pics',
-        subNames: [],
-        icons: {}
+        currentSub: 'pics'
     },
     reducers: {
         updateCurrentSub: (state, action) => {
@@ -85,9 +84,6 @@ export const subredditsSlice = createSlice({
                     }
                 })
                 state.bySubId = newSubId;
-                const names = Object.values(newSubId).map(sub => sub.name);
-                state.subIcons = names;
-
             })
             .addCase(loadSubredditIcons.pending, (state) => {
                 state.isLoadingIcons = true;
@@ -100,14 +96,11 @@ export const subredditsSlice = createSlice({
             .addCase(loadSubredditIcons.fulfilled, (state, action) => {
                 state.isLoadingIcons = false;
                 state.failedToLoadIcons = false;
-                const tempO = state.bySubId
-                for(const key in tempO) {
-                    tempO[key] = {
-                        ...tempO[key],
-                        icon: action.payload[key] || null
+                action.payload.forEach(({name, icon}) => {
+                    if(state.bySubId[name]){
+                        state.bySubId[name].icon = icon
                     }
-                }
-                state.bySubId = tempO;
+                });
             }) 
             
     }
