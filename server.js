@@ -34,10 +34,10 @@ app.get('/api/:subreddit', async (req, res) => {
   }
 });
 
-app.get('/api/reddit-popular-subreddits', async (req, res) => {
+app.get('/api/reddit-sub-icons', async (req, res) => {
   const {subreddit} = req.params;
   try {
-    const response = await fetch('https://www.reddit.com/r/${subreddit}/about.json');
+    const response = await fetch(`https://www.reddit.com/r/${subreddit}/about.json`);
 
 
     if(!response.ok){
@@ -61,7 +61,7 @@ app.get('/api/reddit-popular-subreddits', async (req, res) => {
   }
 });
 
-app.get('/api/reddit-subreddits-icon', async (req, res) => {
+app.get('/api/reddit-popular-subreddits', async (req, res) => {
   try {
     const response = await fetch('https://www.reddit.com/subreddits/popular.json?limit=25');
 
