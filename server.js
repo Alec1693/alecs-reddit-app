@@ -100,12 +100,13 @@ app.get('/api/:sub/comments/:id', async (req, res) => {
       return res.status(response.status).json({error:'Failed to fetch Reddit data'});
     }
 
-    if(!text){
+    const json = await response.json();
+
+    if(!json){
       console.error('Empty response from Reddit API');
       return res.status(500).json({error: 'Empty response from Reddit API'});
     }
 
-    const json = await response.json();
     const comments = json[1]?.data?.children || [];
     res.json(comments);
   } catch (err) {

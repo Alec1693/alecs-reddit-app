@@ -4,7 +4,6 @@ export const loadComments = createAsyncThunk(
     'comments/loadComments',
     async(subData,thunkApi) => {
         const {sub,id} = subData;
-        console.log(sub,id)
         try{
             const response = await fetch(`http://localhost:5000/api/${sub}/comments/${id}`);
 
@@ -42,7 +41,15 @@ export const commentsSlice = createSlice({
         .addCase(loadComments.fulfilled, (state, action) => {
             state.isLoadingComments = false;
             state.failedToLoadComments = false;
-            state.comments = action.payload;
+            const newComments = {};
+            Object.entries(action.payload).forEach(([commentId, comment]) => {
+                newComments[comment.data.id] = {
+                    body: comment.data.body,
+                    author: comment.data.author,
+                    sub: comment.data.link_id
+                }
+            })
+            state.comments = newComments;
         })
     }
 })

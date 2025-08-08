@@ -74,13 +74,13 @@ header{
   flex-direction: column;
 }
 
-.comment-container{
+.comment-icon-container{
   display: flex;
   justify-content: end;
   align-items: end;
 }
 
-.comment-container p{
+.comment-icon-container p{
   margin: 0;
 }
 
