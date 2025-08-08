@@ -11,19 +11,22 @@ export default function SubRedditContainer(){
     useEffect(() => {
         dispatch(loadSubredditsList())
         dispatch(loadSubredditIcons(names))
-    },[])
+    },[names,dispatch])
 
     if(!subs){
         return (<p>Error Loading Subs</p>)
     }
     
     return (
-        <ul className="subreddits-list">
+        <div>
+            <p className="sub-list-title">SubReddits</p>
+            <ul className="subreddits-list">
             {
                 Object.values(subs).map((sub) => {
                     return <SubReddit sub={sub} />
                 })
             }
         </ul>
+        </div>
     );
 }

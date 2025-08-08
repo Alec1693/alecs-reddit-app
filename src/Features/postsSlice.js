@@ -51,6 +51,7 @@ export const postsSlice = createSlice({
                     newPostId[post.id] = {
                         id: post.id,
                         title: post.title,
+                        sub: post.subreddit,
                         thumbnail: post.thumbnail,
                         commentCount: post.num_comments,
                         upVotes: post.ups,

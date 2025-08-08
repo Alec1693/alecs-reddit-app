@@ -1,8 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp, faArrowDown, faComment } from '@fortawesome/free-solid-svg-icons';
 import '../../App.css';
+import { useDispatch } from 'react-redux';
+import { loadComments } from '../../Features/commentsSlice';
 
 export default function Post({data}){
+    const dispatch = useDispatch()
+    const handleClick = (() => {
+        const sendSub = {sub: data.sub, id: data.id}
+        dispatch(loadComments(sendSub));
+    })
     return (
         <div className='post-container'>
             <div className='vote-section'>
@@ -16,7 +23,7 @@ export default function Post({data}){
                     {data.mediaType === 'image' ? <img src={data.thumbnail} alt="Post" className="post-image" /> : null}
                 </div>
                 <div className='comment-container'>
-                    <FontAwesomeIcon icon={faComment} />
+                    <FontAwesomeIcon onClick={handleClick} icon={faComment} />
                     <p>{data.commentCount}</p>
                 </div>
             </div>
