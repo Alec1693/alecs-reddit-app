@@ -92,7 +92,7 @@ app.get('/api/reddit-popular-subreddits', async (req, res) => {
 app.get('/api/:sub/comments/:id', async (req, res) => {
   const {sub,id} = req.params;
   try {
-    const response = await fetch(`https://www.reddit.com/r/${sub}/comments/${id}.json`);
+    const response = await fetch(`https://www.reddit.com/r/${sub}/comments/${id}.json?limit=5`);
 
 
     if(!response.ok){

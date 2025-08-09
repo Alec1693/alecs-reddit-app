@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { loadHomePageFeed  } from "../../Features/postsSlice";
 import Post from "./Post";
+import Comment from "../Comments/Comment";
 
 function filterObjectBySearch(searchTerm, postsObject){
     const postsArray = Object.values(postsObject);
@@ -13,6 +14,7 @@ function filterObjectBySearch(searchTerm, postsObject){
 }
 
 export default function PostFeed(){
+    const comments = useSelector((state) => state.comments.comments)
     const term = useSelector((state) => state.posts.searchTerm);
     const feedData = useSelector((state) => state.posts.byPostId);
     const dispatch = useDispatch();
@@ -37,7 +39,17 @@ export default function PostFeed(){
         <div className="post-feed-container">
             <ul>
                 {postFeed.map(post => 
-                    <Post key={post.id} id={post.id} data={post}/>
+                    <li key={post.id}>
+                        <Post id={post.id} data={post}/>
+
+                        {comments[post.id] && (
+                            <ul>
+                                {Object.entries(comments).forEach(([id, comment]) => {
+                                <Comment data={comment}/>}
+                            )}
+                            </ul>
+                        )}
+                    </li>
                 )}
             </ul>
         </div>

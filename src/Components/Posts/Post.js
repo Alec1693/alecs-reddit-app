@@ -4,10 +4,6 @@ import '../../App.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadComments } from '../../Features/commentsSlice';
 
-const removeT3Prefix = (str) => {
-    return str.replace(/^t3_/, '')
-}
-
 export default function Post({data}){
     const comments = useSelector((state) => state.comments.comments);
     const dispatch = useDispatch();
@@ -15,37 +11,7 @@ export default function Post({data}){
         const sendSub = {sub: data.sub, id: data.id}
         dispatch(loadComments(sendSub));
     })
-/* 
 
-
-    if(Object.keys(comments).length !== 0){
-        if(comments[data.id]){
-            return(
-                <div>
-                    <div className='post-container'>
-                    <div className='vote-section'>
-                        <FontAwesomeIcon icon={faArrowUp} />
-                        <p>{data.upVotes}</p> 
-                        <FontAwesomeIcon icon={faArrowDown} />
-                    </div>
-                    <div className='post-content'>
-                        <h2>{data.title}</h2>
-                        <div className='post-image-container'>
-                            {data.mediaType === 'image' ? <img src={data.thumbnail} alt="Post" className="post-image" /> : null}
-                        </div>
-                        <div className='comment-icon-container'>
-                            <FontAwesomeIcon onClick={handleClick} icon={faComment} />
-                            <p>{data.commentCount}</p>
-                        </div>
-                    </div>
-                 </div>
-                 <div>
-
-                 </div>
-                </div>
-            )
-        }
-    } */
     return (
         <div className='post-container'>
             <div className='vote-section'>

@@ -43,10 +43,11 @@ export const commentsSlice = createSlice({
             state.failedToLoadComments = false;
             const newComments = {};
             Object.entries(action.payload).forEach(([commentId, comment]) => {
+                const removedPrefix = comment.data.parent_id.replace(/^t3_/, '')
                 newComments[comment.data.id] = {
                     body: comment.data.body,
                     author: comment.data.author,
-                    sub: comment.data.link_id
+                    sub: removedPrefix
                 }
             })
             state.comments = newComments;
