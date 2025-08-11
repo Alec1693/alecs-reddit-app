@@ -25,9 +25,9 @@ export default function PostFeed(){
         if(sub){
             dispatch(loadHomePageFeed(sub));
         }
-    },[dispatch,sub])
+    },[dispatch,sub,comments])
 
-    if(!feedData){
+    if(!postFeed){
         return (
             <div className="post-feed-container">
                 <p>Loading Reddit Feed</p>
@@ -37,6 +37,19 @@ export default function PostFeed(){
 
     return (
         <div className="post-feed-container">
+            <ul>
+                {postFeed.map(post => 
+                    <li key={post.id}>
+                        <Post id={post.id} data={post}/>
+                    </li>
+                )}
+            </ul>
+        </div>
+    )
+}
+
+/*
+<div className="post-feed-container">
             <ul>
                 {postFeed.map(post => 
                     <li key={post.id}>
@@ -53,5 +66,4 @@ export default function PostFeed(){
                 )}
             </ul>
         </div>
-    )
-}
+*/

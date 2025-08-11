@@ -41,16 +41,16 @@ export const commentsSlice = createSlice({
         .addCase(loadComments.fulfilled, (state, action) => {
             state.isLoadingComments = false;
             state.failedToLoadComments = false;
-            const newComments = {};
+            const tempArray = [];
+            let postId = null;
             Object.entries(action.payload).forEach(([commentId, comment]) => {
                 const removedPrefix = comment.data.parent_id.replace(/^t3_/, '')
-                newComments[comment.data.id] = {
-                    body: comment.data.body,
-                    author: comment.data.author,
-                    sub: removedPrefix
+                tempArray.push({id: comment.data.id, body: comment.data.body, author: comment.data.author})
+                if(!postId){
+                    postId = removedPrefix
                 }
             })
-            state.comments = newComments;
+            state.comments[postId] = tempArray;
         })
     }
 })

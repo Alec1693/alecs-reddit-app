@@ -161,3 +161,8 @@ header{
 .comment-container svg:hover{
   cursor: pointer;
 }
+
+.post-feed-container ul{
+  list-style-type: none;
+}
+
