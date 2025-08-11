@@ -14,7 +14,6 @@ function filterObjectBySearch(searchTerm, postsObject){
 }
 
 export default function PostFeed(){
-    const comments = useSelector((state) => state.comments.comments)
     const term = useSelector((state) => state.posts.searchTerm);
     const feedData = useSelector((state) => state.posts.byPostId);
     const dispatch = useDispatch();
@@ -25,7 +24,7 @@ export default function PostFeed(){
         if(sub){
             dispatch(loadHomePageFeed(sub));
         }
-    },[dispatch,sub,comments])
+    },[dispatch,sub])
 
     if(!postFeed){
         return (
