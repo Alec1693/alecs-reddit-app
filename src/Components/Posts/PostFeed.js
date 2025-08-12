@@ -18,7 +18,6 @@ const getIds = (obj) => {
     Object.values(obj).forEach(sub => {
         idList.push({id: sub.id, sub: sub.sub})
     })
-    console.log(idList);
     return idList
 }
 
@@ -29,7 +28,6 @@ export default function PostFeed(){
     const dispatch = useDispatch();
     const sub = useSelector((state) => state.subs.currentSub);
     const postFeed = filterObjectBySearch(term, feedData);
-    const postIds = getIds(feedData);
 
     useEffect(() => {
         if(sub){
@@ -39,9 +37,10 @@ export default function PostFeed(){
 
     useEffect(() => {
         if(postFeed){
-            dispatch(loadComments(postIds));
+            const postIds = getIds(feedData)
+            dispatch(loadComments(postIds))
         }
-    },[dispatch,postIds])
+    },[dispatch,postFeed])
 
     if(!postFeed){
         return (

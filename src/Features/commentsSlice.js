@@ -26,9 +26,9 @@ export const loadComments = createAsyncThunk(
     async(subData,thunkApi) => {
         try{
             const commentsData = await Promise.all(
-                subData.map(async (name) => {
-                    const res = await fetch(`http://localhost:5000/api/${name.sub}/comments/${name.id}`);
-                    if(!res.ok) throw new Error(`Failed to fetch ${name.id}`);
+                subData.map(async ({id,sub}) => {
+                    const res = await fetch(`http://localhost:5000/api/${sub}/comments/${id}`);
+                    if(!res.ok) throw new Error(`Failed to fetch ${id}`);
                     const json = await res.json();
                     return json
             })
@@ -63,6 +63,15 @@ export const commentsSlice = createSlice({
         .addCase(loadComments.fulfilled, (state, action) => {
             state.isLoadingComments = false;
             state.failedToLoadComments = false;
+            const tempComments = {}
+            for (let i = 0; i < action.payload.length; i++) {
+                let tempList = [];
+                for (let j = 0; j < action.payload[i].length; j++) {
+                    tempList.push(action.payload[i][j])
+                }
+                tempComments[i] = tempList;
+            }
+            state.comments = tempComments;
 /*             const tempArray = [];
             let postId = null;
             Object.entries(action.payload).forEach(([commentId, comment]) => {
@@ -73,7 +82,6 @@ export const commentsSlice = createSlice({
                 }
             })
             state.comments[postId] = tempArray; */
-            state.comments = action.payload;
         })
     }
 })
