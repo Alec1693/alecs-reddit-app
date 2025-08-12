@@ -2,7 +2,7 @@ import React, {useEffect} from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { loadHomePageFeed  } from "../../Features/postsSlice";
 import Post from "./Post";
-import Comment from "../Comments/Comment";
+import { loadComments } from "../../Features/commentsSlice";
 
 function filterObjectBySearch(searchTerm, postsObject){
     const postsArray = Object.values(postsObject);
@@ -13,18 +13,35 @@ function filterObjectBySearch(searchTerm, postsObject){
     );
 }
 
+const getIds = (obj) => {
+    let idList = [];
+    Object.values(obj).forEach(sub => {
+        idList.push({id: sub.id, sub: sub.sub})
+    })
+    console.log(idList);
+    return idList
+}
+
+
 export default function PostFeed(){
     const term = useSelector((state) => state.posts.searchTerm);
     const feedData = useSelector((state) => state.posts.byPostId);
     const dispatch = useDispatch();
     const sub = useSelector((state) => state.subs.currentSub);
-    const postFeed = filterObjectBySearch(term, feedData)
+    const postFeed = filterObjectBySearch(term, feedData);
+    const postIds = getIds(feedData);
 
     useEffect(() => {
         if(sub){
             dispatch(loadHomePageFeed(sub));
         }
     },[dispatch,sub])
+
+    useEffect(() => {
+        if(postFeed){
+            dispatch(loadComments(postIds));
+        }
+    },[dispatch,postIds])
 
     if(!postFeed){
         return (

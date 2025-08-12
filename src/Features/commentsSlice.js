@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const loadComments = createAsyncThunk(
+/* export const loadComments = createAsyncThunk(
     'comments/loadComments',
     async(subData,thunkApi) => {
         const {sub,id} = subData;
@@ -19,7 +19,29 @@ export const loadComments = createAsyncThunk(
             return thunkApi.rejectWithValue(error.message);
         }
     }
+) */
+
+export const loadComments = createAsyncThunk(
+    'comments/loadComments',
+    async(subData,thunkApi) => {
+        try{
+            const commentsData = await Promise.all(
+                subData.map(async (name) => {
+                    const res = await fetch(`http://localhost:5000/api/${name.sub}/comments/${name.id}`);
+                    if(!res.ok) throw new Error(`Failed to fetch ${name.id}`);
+                    const json = await res.json();
+                    return json
+            })
+        )
+        return commentsData
+            
+        }catch(error){
+            console.error('Fetch error:', error);
+            return thunkApi.rejectWithValue(error.message);
+        }
+    }
 )
+
 
 export const commentsSlice = createSlice({
     name: 'comments',
@@ -41,7 +63,7 @@ export const commentsSlice = createSlice({
         .addCase(loadComments.fulfilled, (state, action) => {
             state.isLoadingComments = false;
             state.failedToLoadComments = false;
-            const tempArray = [];
+/*             const tempArray = [];
             let postId = null;
             Object.entries(action.payload).forEach(([commentId, comment]) => {
                 const removedPrefix = comment.data.parent_id.replace(/^t3_/, '')
@@ -50,7 +72,8 @@ export const commentsSlice = createSlice({
                     postId = removedPrefix
                 }
             })
-            state.comments[postId] = tempArray;
+            state.comments[postId] = tempArray; */
+            state.comments = action.payload;
         })
     }
 })

@@ -35,7 +35,6 @@ export const loadSubredditIcons = createAsyncThunk(
                     return { [name]: icon}
                 })
             );
-            console.log(subNames)
             return iconData;
         }catch(error){
             console.error('Fetch error:', error);
