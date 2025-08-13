@@ -69,19 +69,14 @@ export const commentsSlice = createSlice({
                 for (let j = 0; j < action.payload[i].length; j++) {
                     tempList.push(action.payload[i][j])
                 }
-                tempComments[i] = tempList;
+                let id = action.payload[i][0].data.parent_id.replace(/^t3_/,'');
+                if(id){
+                    tempComments[id] = tempList;
+                }else{
+                    tempComments[i] = tempList
+                }
             }
             state.comments = tempComments;
-/*             const tempArray = [];
-            let postId = null;
-            Object.entries(action.payload).forEach(([commentId, comment]) => {
-                const removedPrefix = comment.data.parent_id.replace(/^t3_/, '')
-                tempArray.push({id: comment.data.id, body: comment.data.body, author: comment.data.author})
-                if(!postId){
-                    postId = removedPrefix
-                }
-            })
-            state.comments[postId] = tempArray; */
         })
     }
 })

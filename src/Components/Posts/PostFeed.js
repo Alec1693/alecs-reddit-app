@@ -30,17 +30,15 @@ export default function PostFeed(){
     const postFeed = filterObjectBySearch(term, feedData);
 
     useEffect(() => {
-        if(sub){
-            dispatch(loadHomePageFeed(sub));
-        }
+        dispatch(loadHomePageFeed(sub));
     },[dispatch,sub])
 
     useEffect(() => {
-        if(postFeed){
+        if(feedData){
             const postIds = getIds(feedData)
             dispatch(loadComments(postIds))
         }
-    },[dispatch,postFeed])
+    },[dispatch,sub])
 
     if(!postFeed){
         return (
