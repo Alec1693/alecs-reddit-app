@@ -1,13 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp, faArrowDown, faComment } from '@fortawesome/free-solid-svg-icons';
 import '../../App.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useState } from 'react';
 
 export default function Post({data}){
     const comments = useSelector((state) => state.comments.comments);
     const [showComments, setShowComments] = useState(false);
-    const dispatch = useDispatch();
     const toggleComments = () => {
         setShowComments(prev => !prev)
     }
@@ -16,9 +15,6 @@ export default function Post({data}){
         toggleComments()
     })
 
-    const test = () => {
-        console.log(comments[data.id])
-    }
 
     return (
              <div className='post-container'>

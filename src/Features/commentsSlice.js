@@ -69,8 +69,8 @@ export const commentsSlice = createSlice({
                 for (let j = 0; j < action.payload[i].length; j++) {
                     tempList.push(action.payload[i][j])
                 }
-                let id = action.payload[i][0].data.parent_id.replace(/^t3_/,'');
-                if(id){
+                if(action.payload[i][0].data){
+                    let id = action.payload[i][0].data.parent_id.replace(/^t3_/,'');
                     tempComments[id] = tempList;
                 }else{
                     tempComments[i] = tempList
@@ -79,8 +79,25 @@ export const commentsSlice = createSlice({
             state.comments = tempComments;
         })
     }
+    /*
+            for (let i = 0; i < action.payload.length; i++) {
+                let tempList = [];
+                for (let j = 0; j < action.payload[i].length; j++) {
+                    tempList.push(action.payload[i][j])
+                }
+                let id = action.payload[i][0].data.parent_id.replace(/^t3_/,'');
+                if(id){
+                    tempComments[id] = tempList;
+                }else{
+                    tempComments[i] = tempList
+                }
+            }
+            state.comments = tempComments;
+*/
 })
 
 export const selectComments = (state) => state.comments.comments;
 
 export default commentsSlice.reducer;
+
+

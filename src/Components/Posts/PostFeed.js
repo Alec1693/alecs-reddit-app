@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { loadHomePageFeed  } from "../../Features/postsSlice";
 import Post from "./Post";
@@ -35,10 +35,10 @@ export default function PostFeed(){
 
     useEffect(() => {
         if(feedData){
-            const postIds = getIds(feedData)
-            dispatch(loadComments(postIds))
+            const postIds = getIds(feedData);
+            dispatch(loadComments(postIds));
         }
-    },[dispatch,sub])
+    },[dispatch,feedData])
 
     if(!postFeed){
         return (
