@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { loadComments } from "./commentsSlice";
 
 export const loadHomePageFeed = createAsyncThunk(
     'posts/loadHomePageFeed',
-    async(subreddit,thunkApi) => {
+    async(subreddit, {dispatch}) => {
         try{
             const response = await fetch(`http://localhost:5000/api/${subreddit}`);
 
@@ -11,12 +12,38 @@ export const loadHomePageFeed = createAsyncThunk(
                 
             }
             const json = await response.json();
+            const postIds = [];
+            Object.values(json).forEach(post => {
+                postIds.push({id: post.id, sub: post.subreddit})
+            })
+
+            if(postIds.length > 0){
+                await dispatch(loadComments(postIds))
+            }
+
             return json;
             
         }catch(error){
             console.error('Fetch error:', error);
-            return thunkApi.rejectWithValue(error.message);
         }
+    }
+)
+
+export const fetchPostsAndComments = createAsyncThunk(
+    "posts/fetchPostsAndComments",
+    async (sub, {dispatch}) => {
+        const posts = await loadHomePageFeed(sub);
+
+        const postIds = [];
+        Object.values(posts).forEach(post => {
+                postIds.push({id: post.id, sub: post.subreddit})
+            })
+
+        if(postIds.length > 0){
+            await dispatch(loadComments(postIds))
+        }
+
+        return posts;
     }
 )
 

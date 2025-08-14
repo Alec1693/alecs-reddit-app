@@ -28,17 +28,21 @@ export default function PostFeed(){
     const dispatch = useDispatch();
     const sub = useSelector((state) => state.subs.currentSub);
     const postFeed = filterObjectBySearch(term, feedData);
+    const comments = useSelector((state) => state.comments.comments);
 
     useEffect(() => {
         dispatch(loadHomePageFeed(sub));
     },[dispatch,sub])
 
-    useEffect(() => {
-        if(feedData){
+/*     useEffect(() => {
+        if(JSON.stringify(feedData) !== JSON.stringify(prevFeedData)){
+            setPrevFeedData(feedData)
             const postIds = getIds(feedData);
+            console.log(postIds)
             dispatch(loadComments(postIds));
+            console.log(comments)
         }
-    },[dispatch,feedData])
+    },[dispatch,feedData]) */
 
     if(!postFeed){
         return (
@@ -60,23 +64,3 @@ export default function PostFeed(){
         </div>
     )
 }
-
-/*
-<div className="post-feed-container">
-            <ul>
-                {postFeed.map(post => 
-                    <li key={post.id}>
-                        <Post id={post.id} data={post}/>
-
-                        {comments[post.id] && (
-                            <ul>
-                                {Object.entries(comments).forEach(([id, comment]) => {
-                                <Comment data={comment}/>}
-                            )}
-                            </ul>
-                        )}
-                    </li>
-                )}
-            </ul>
-        </div>
-*/
