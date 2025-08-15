@@ -52,7 +52,9 @@ export const commentsSlice = createSlice({
             for (let i = 0; i < action.payload.length; i++) {
                 let tempList = [];
                 for (let j = 0; j < action.payload[i].length; j++) {
-                    tempList.push(action.payload[i][j])
+                    if(action.payload[i][j].kind !== 'more'){
+                        tempList.push(action.payload[i][j])
+                    }
                 }
                 let id = ''
                 if(action.payload[i][0]){
@@ -60,7 +62,8 @@ export const commentsSlice = createSlice({
                 }
                 if(id){
                     tempComments[id] = tempList;
-                }else{
+                }
+                else{
                     tempComments[i] = tempList
                 }
             }

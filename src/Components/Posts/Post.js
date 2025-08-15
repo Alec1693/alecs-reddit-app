@@ -17,8 +17,9 @@ export default function Post({data}){
 
 
     return (
-             <div className='post-container'>
-                <div className='vote-section'>
+             <div>
+                <div className='post-container'>
+                    <div className='vote-section'>
                     <FontAwesomeIcon icon={faArrowUp} />
                     <p>{data.upVotes}</p> 
                     <FontAwesomeIcon icon={faArrowDown} />
@@ -32,6 +33,7 @@ export default function Post({data}){
                         <FontAwesomeIcon onClick={handleClick} icon={faComment} />
                         <p>{data.commentCount}</p>
                     </div>
+                </div>
                 </div>
                 {showComments &&
                 <div className='comments-container'>
