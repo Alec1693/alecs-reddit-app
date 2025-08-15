@@ -40,6 +40,10 @@ header{
   border: none;
 }
 
+.searchbox-container svg{
+  cursor: pointer;
+}
+
 .searchbox-container input{
   height: max-content;
   flex-grow: 1;
@@ -70,18 +74,19 @@ header{
   flex-direction: column;
 }
 
-.comment-container{
+.comment-icon-container{
   display: flex;
   justify-content: end;
   align-items: end;
 }
 
-.comment-container p{
+.comment-icon-container p{
   margin: 0;
 }
 
 .logo p span{
   color: #FF4500;
+  font-size: large;
 }
 
 .logo p{
@@ -102,6 +107,11 @@ header{
   margin: 16px 16px;
   display: flex;
   height: fit-content;
+}
+
+.sub-list-title{
+  font-size: large;
+  text-decoration: underline;
 }
 
 .subreddits-list{
@@ -151,3 +161,8 @@ header{
 .comment-container svg:hover{
   cursor: pointer;
 }
+
+.post-feed-container ul{
+  list-style-type: none;
+}
+

@@ -89,6 +89,32 @@ app.get('/api/reddit-popular-subreddits', async (req, res) => {
 });
 
 
+app.get('/api/:sub/comments/:id', async (req, res) => {
+  const {sub,id} = req.params;
+  try {
+    const response = await fetch(`https://www.reddit.com/r/${sub}/comments/${id}.json?limit=5`);
+
+
+    if(!response.ok){
+      console.error(`Reddit API returned status ${response.status}`);
+      return res.status(response.status).json({error:'Failed to fetch Reddit data'});
+    }
+
+    const json = await response.json();
+
+    if(!json){
+      console.error('Empty response from Reddit API');
+      return res.status(500).json({error: 'Empty response from Reddit API'});
+    }
+
+    const comments = json[1]?.data?.children || [];
+    res.json(comments);
+  } catch (err) {
+    console.error('Error fetching Reddit data:', err);
+    res.status(500).json({ error: 'Failed to fetch Reddit data' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

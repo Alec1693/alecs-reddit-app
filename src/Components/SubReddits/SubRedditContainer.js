@@ -4,8 +4,18 @@ import { loadSubredditIcons, loadSubredditsList } from "../../Features/subreddit
 import { useSelector, useDispatch } from "react-redux";
 
 export default function SubRedditContainer(){
-    const subs = useSelector((state) => state.subs.bySubId);
-    const names = useSelector((state) => state.subs.subNames);
+    const subs = useSelector((state) => state.subs.bySubId);    
+    
+    const getNames = (obj) => {
+        let nList = [];
+        Object.values(obj).forEach(value => {
+            nList.push(value.name);
+        })
+        return nList
+    }
+
+
+    const names = getNames(subs);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -13,17 +23,25 @@ export default function SubRedditContainer(){
         dispatch(loadSubredditIcons(names))
     },[])
 
-    if(!subs){
-        return (<p>Error Loading Subs</p>)
+    if(Object.entries(subs).length <= 0){
+        return (
+            <div>
+                <h3>Subreddits</h3>
+                <p>Error Loading Subs</p>
+            </div>
+        )
     }
     
     return (
-        <ul className="subreddits-list">
+        <div>
+            <p className="sub-list-title">SubReddits</p>
+            <ul className="subreddits-list">
             {
                 Object.values(subs).map((sub) => {
                     return <SubReddit sub={sub} />
                 })
             }
         </ul>
+        </div>
     );
 }

@@ -17,29 +17,29 @@ export default function PostFeed(){
     const feedData = useSelector((state) => state.posts.byPostId);
     const dispatch = useDispatch();
     const sub = useSelector((state) => state.subs.currentSub);
-    const postFeed = filterObjectBySearch(term, feedData)
+    const postFeed = filterObjectBySearch(term, feedData);
 
     useEffect(() => {
-        if(sub){
-            dispatch(loadHomePageFeed(sub));
-        }
+        dispatch(loadHomePageFeed(sub));
     },[dispatch,sub])
 
-    if(!feedData){
+    if(postFeed && Object.entries(postFeed).length > 0){
         return (
             <div className="post-feed-container">
-                <p>Loading Reddit Feed</p>
+                <ul>
+                    {postFeed && Object.entries(postFeed).length > 0 && postFeed.map(post => 
+                        <li key={post.id}>
+                            <Post id={post.id} data={post}/>
+                        </li>
+                    )}
+                </ul>
             </div>
         )
     }
-
+    
     return (
         <div className="post-feed-container">
-            <ul>
-                {postFeed.map(post => 
-                    <Post key={post.id} id={post.id} data={post}/>
-                )}
-            </ul>
+                <p>Loading Reddit Feed</p>
         </div>
     )
 }
