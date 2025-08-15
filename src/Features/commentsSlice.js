@@ -7,9 +7,15 @@ export const loadComments = createAsyncThunk(
             const commentsData = await Promise.all(
                 subData.map(async ({id,sub}) => {
                     const res = await fetch(`http://localhost:5000/api/${sub}/comments/${id}`);
-                    if(!res.ok) throw new Error(`Failed to fetch ${id}`);
+                    if(!res.ok){
+                        console.warn(`Failed to fetch comments ${id}`)
+                        return [];
+                    } 
                     const json = await res.json();
-                    return json
+                    return json;
+/*                     const commentsArray = json[1]?.data?.children || [];
+                    const safeComments = commentsArray.filter(c => c?.data)
+                    return safeComments; */
             })
         )
         return commentsData
@@ -48,7 +54,10 @@ export const commentsSlice = createSlice({
                 for (let j = 0; j < action.payload[i].length; j++) {
                     tempList.push(action.payload[i][j])
                 }
-                let id = action.payload[i][0].data.parent_id.replace(/^t3_/,'');
+                let id = ''
+                if(action.payload[i][0]){
+                    id = action.payload[i][0].data.parent_id.replace(/^t3_/,'');
+                }
                 if(id){
                     tempComments[id] = tempList;
                 }else{

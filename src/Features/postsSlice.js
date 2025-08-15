@@ -29,24 +29,6 @@ export const loadHomePageFeed = createAsyncThunk(
     }
 )
 
-export const fetchPostsAndComments = createAsyncThunk(
-    "posts/fetchPostsAndComments",
-    async (sub, {dispatch}) => {
-        const posts = await loadHomePageFeed(sub);
-
-        const postIds = [];
-        Object.values(posts).forEach(post => {
-                postIds.push({id: post.id, sub: post.subreddit})
-            })
-
-        if(postIds.length > 0){
-            await dispatch(loadComments(postIds))
-        }
-
-        return posts;
-    }
-)
-
 export const postsSlice = createSlice({
     name: 'posts',
     initialState: {

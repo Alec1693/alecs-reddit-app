@@ -23,8 +23,13 @@ export default function SubRedditContainer(){
         dispatch(loadSubredditIcons(names))
     },[])
 
-    if(!subs){
-        return (<p>Error Loading Subs</p>)
+    if(Object.entries(subs).length <= 0){
+        return (
+            <div>
+                <h3>Subreddits</h3>
+                <p>Error Loading Subs</p>
+            </div>
+        )
     }
     
     return (

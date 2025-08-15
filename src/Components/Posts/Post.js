@@ -36,7 +36,7 @@ export default function Post({data}){
                 {showComments &&
                 <div className='comments-container'>
                     <ul>
-                        {comments[data.id].map((comment, index) => (
+                        {comments[data.id]?.map((comment, index) => (
                             <li key={index}>Author: {comment.data.author} -- {comment.data.body}</li>
                         ))}
                     </ul>
