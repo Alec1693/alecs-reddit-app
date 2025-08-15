@@ -23,23 +23,23 @@ export default function PostFeed(){
         dispatch(loadHomePageFeed(sub));
     },[dispatch,sub])
 
-    if(Object.entries(feedData).length <= 0){
+    if(postFeed && Object.entries(postFeed).length > 0){
         return (
             <div className="post-feed-container">
-                <p>Loading Reddit Feed</p>
+                <ul>
+                    {postFeed && Object.entries(postFeed).length > 0 && postFeed.map(post => 
+                        <li key={post.id}>
+                            <Post id={post.id} data={post}/>
+                        </li>
+                    )}
+                </ul>
             </div>
         )
     }
-
+    
     return (
         <div className="post-feed-container">
-            <ul>
-                {Object.entries(postFeed).length > 0 && postFeed.map(post => 
-                    <li key={post.id}>
-                        <Post id={post.id} data={post}/>
-                    </li>
-                )}
-            </ul>
+                <p>Loading Reddit Feed</p>
         </div>
     )
 }

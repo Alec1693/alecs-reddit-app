@@ -3,7 +3,7 @@ import { loadComments } from "./commentsSlice";
 
 export const loadHomePageFeed = createAsyncThunk(
     'posts/loadHomePageFeed',
-    async(subreddit, {dispatch}) => {
+    async(subreddit, {dispatch, getState}) => {
         try{
             const response = await fetch(`http://localhost:5000/api/${subreddit}`);
 
