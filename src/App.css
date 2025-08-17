@@ -15,7 +15,7 @@ html, body {
 header{
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     height: 64px;
-    padding: 0 64px;
+    padding: 0 16px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 16px;
@@ -28,6 +28,12 @@ header{
     grid-column: 1 / 2;
     display: flex;
     align-items: center;
+}
+
+.logo svg{
+  width: 100%;
+  max-width: 30px;
+  max-height: 30px;
 }
 
 .searchbox-container{
@@ -45,10 +51,10 @@ header{
 }
 
 .searchbox-container input{
-  height: max-content;
+  height: 100%;
   flex-grow: 1;
   border-radius: 4px;
-  height: max-content;
+  max-height: 30px;
   border: none;
   background: #f3f3f3;
 } 
@@ -59,7 +65,7 @@ header{
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   background-color: white;
-  padding: 16px;
+  padding: 6px;
   margin: 16px 0;
 }
 
@@ -80,8 +86,14 @@ header{
   align-items: end;
 }
 
+
+
 .comment-icon-container p{
   margin: 0;
+}
+
+.comment-icon-container svg:hover{
+  cursor: pointer;
 }
 
 .logo p span{
@@ -138,13 +150,16 @@ header{
 }
 
 .post-image-container{
-  display: inline-block;
+  display: flex;
+  justify-content: center;
 }
 
 .post-image-container img{
-  display: block;
-  max-width: 100%;
+  width: 100%;
+  max-width: 250px;
   height: auto;
+  object-fit: contain;
+  border-radius: 8px;
 }
 
 .subreddit-image{
