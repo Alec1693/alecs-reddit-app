@@ -7,9 +7,6 @@
     "@fortawesome/react-fontawesome": "^0.2.3",
     "@reduxjs/toolkit": "^2.8.2",
     "@testing-library/dom": "^10.4.0",
-    "@testing-library/jest-dom": "^6.6.4",
-    "@testing-library/react": "^16.3.0",
-    "@testing-library/user-event": "^13.5.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "node-fetch": "^3.3.2",
@@ -47,5 +44,11 @@
   "main": "index.js",
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.7.0",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "jest": "^27.5.1"
+  }
 }
