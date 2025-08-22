@@ -71,7 +71,7 @@ describe('postsSlice reducer', () => {
 
 describe('loadHomePageFeed thunk', () => {
   it('dispatches fulfilled when API resolves', async () => {
-    const mockData = {"abc": {
+    const mockData = [{
         id: "abc",
         title: "Test Post",
         sub: "reactjs",
@@ -81,7 +81,7 @@ describe('loadHomePageFeed thunk', () => {
         downVotes: 2,
         mediaType: "link",
         url_overridden_by_dest: "http://example.com"
-      }}
+      }]
       global.fetch = jest.fn(() => 
         Promise.resolve({json: () => Promise.resolve(mockData)})
       )
