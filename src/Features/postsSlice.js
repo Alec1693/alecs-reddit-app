@@ -25,6 +25,7 @@ export const loadHomePageFeed = createAsyncThunk(
             
         }catch(error){
             console.error('Fetch error:', error);
+            throw error;
         }
     }
 )

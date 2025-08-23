@@ -83,12 +83,12 @@ describe('loadHomePageFeed thunk', () => {
         url_overridden_by_dest: "http://example.com"
       }]
       global.fetch = jest.fn(() => 
-        Promise.resolve({json: () => Promise.resolve(mockData)})
+        Promise.resolve({ok: true, json: () => Promise.resolve(mockData)})
       )
       const dispatch = jest.fn();
       const getState = jest.fn(() => ({}))
 
-      await loadHomePageFeed('abc')(dispatch, getState, undefined)
+      await loadHomePageFeed('reactjs')(dispatch, getState, undefined)
 
       expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
         type: loadHomePageFeed.pending.type
