@@ -61,4 +61,22 @@ describe('loadComments thunk', () => {
             payload: [mockData]
         }))
     })
+
+    it('dispatches rejected when API fails', async () => {
+        global.fetch = jest.fn(() => Promise.reject(new Error('Network error')));
+
+        const dispatch = jest.fn();
+        const getState = jest.fn(() => ({}));
+
+        await loadComments([{}])(dispatch, getState, undefined);
+
+        expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
+            type: loadComments.pending.type
+        }));
+
+        expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
+            type: loadComments.rejected.type,
+            error: expect.any(Object)
+        }));
+    })
 })
