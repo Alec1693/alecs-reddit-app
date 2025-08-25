@@ -108,8 +108,8 @@ describe('loadHomePageFeed thunk', () => {
     await loadHomePageFeed('abc')(dispatch, getState, undefined);
 
     expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
-      type: loadHomePageFeed.pending.type,
-    }))
+      type: loadHomePageFeed.pending.type
+    }));
 
     expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
       type: loadHomePageFeed.rejected.type,
