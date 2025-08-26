@@ -6,7 +6,7 @@ export const loadComments = createAsyncThunk(
         try{
             const commentsData = await Promise.all(
                 subData.map(async ({id,sub}) => {
-                    const res = await fetch(`http://localhost:5000/api/${sub}/comments/${id}`);
+                    const res = await fetch(`https://www.reddit.com/r/${sub}/comments/${id}.json?limit=5`);
                     if(!res.ok){
                         console.warn(`Failed to fetch comments ${id}`)
                         return [];

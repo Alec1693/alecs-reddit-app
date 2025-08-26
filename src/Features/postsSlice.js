@@ -5,7 +5,7 @@ export const loadHomePageFeed = createAsyncThunk(
     'posts/loadHomePageFeed',
     async(subreddit, {dispatch, getState}) => {
         try{
-            const response = await fetch(`http://localhost:5000/api/${subreddit}`);
+            const response = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
 
             if(!response.ok){
                 throw new Error(`HTTP error! status: ${response.status}`)

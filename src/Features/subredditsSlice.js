@@ -4,7 +4,7 @@ export const loadSubredditsList = createAsyncThunk(
     'subreddits/loadSubreddits',
     async(_,thunkApi) => {
         try{
-            const response = await fetch('http://localhost:5000/api/reddit-popular-subreddits');
+            const response = await fetch('https://www.reddit.com/subreddits/popular.json?limit=25');
 
             if(!response.ok){
                 throw new Error(`HTTP error! status: ${response.status}`)
@@ -26,7 +26,7 @@ export const loadSubredditIcons = createAsyncThunk(
         try{
             const iconData = await Promise.all(
                 subNames.map(async (name) => {
-                    const res = await fetch(`https://www.reddit.com/r/${name}/about.json`);
+                    const res = await fetch(`https://www.reddit.com/r/${subreddit}/about.json`);
                     if (!res.ok) throw new Error(`Failed to fetch ${name}`);
                     const json = await res.json();
                     const { icon_img, community_icon } = json.data;
