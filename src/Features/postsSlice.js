@@ -25,6 +25,7 @@ export const loadHomePageFeed = createAsyncThunk(
             
         }catch(error){
             console.error('Fetch error:', error);
+            throw error;
         }
     }
 )
@@ -35,7 +36,7 @@ export const postsSlice = createSlice({
         byPostId: {},
         searchTerm: '',
         isLoadingHomePageFeed: false,
-        failedtoLoadHomePageFeed: false
+        failedToLoadHomePageFeed: false
     },
     reducers: {
         setSearchTerm: (state, action) => {
@@ -46,15 +47,15 @@ export const postsSlice = createSlice({
         builder
             .addCase(loadHomePageFeed.pending, (state) => {
                 state.isLoadingHomePageFeed = true;
-                state.failedtoLoadHomePageFeed = false;
+                state.failedToLoadHomePageFeed = false;
             })
             .addCase(loadHomePageFeed.rejected, (state) => {
                 state.isLoadingHomePageFeed = false;
-                state.failedtoLoadHomePageFeed = true;
+                state.failedToLoadHomePageFeed = true;
             })
             .addCase(loadHomePageFeed.fulfilled, (state, action) => {
                 state.isLoadingHomePageFeed = false;
-                state.failedtoLoadHomePageFeed = false;
+                state.failedToLoadHomePageFeed = false;
                 const newPostId = {};
                 Object.entries(action.payload).forEach(([postId, post]) => {
                     newPostId[post.id] = {
@@ -77,7 +78,7 @@ export const postsSlice = createSlice({
 
 export const selectFeedData = (state) => state.posts.byPostId;
 export const isLoadingFeed = (state) => state.posts.isLoadingHomePageFeed;
-export const failedToLoadFeed = (state) => state.posts.failedtoLoadHomePageFeed;
+export const failedToLoadFeed = (state) => state.posts.failedToLoadHomePageFeed;
 export const {setSearchTerm} = postsSlice.actions;
 
 export default postsSlice.reducer;

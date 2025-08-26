@@ -32,7 +32,7 @@ export const loadSubredditIcons = createAsyncThunk(
                     const { icon_img, community_icon } = json.data;
                     const rawIcon = community_icon || icon_img || '';
                     const icon = rawIcon.split('?')[0].replace(/&amp;/g, '&') || null;
-                    return { [name]: icon}
+                    return { name, icon}
                 })
             );
             return iconData;
