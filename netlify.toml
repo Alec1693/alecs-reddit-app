@@ -1,0 +1,19 @@
+[build]
+    functions = "netlify/functions"
+    publish = "build"
+
+[[redirects]]
+  from = "/api/:subreddit"
+  to = "/.netlify/functions/subreddit/:subreddit"
+  status = 200
+
+[[redirects]]
+  from = "/api/reddit-sub-icons/:subreddit"
+  to = "/.netlify/functions/reddit-sub-icons/:subreddit"
+  status = 200
+
+
+[[redirects]]
+  from = "/api/reddit-popular-subreddits"
+  to = "/.netlify/functions/reddit-popular-subreddits"
+  status = 200
