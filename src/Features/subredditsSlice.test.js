@@ -92,3 +92,66 @@ describe('subredditsSlice reducer', () => {
         })
     })
 })
+
+describe('loadSubredditsList thunk', () => {
+    it('dispatches fulfilled when API resolves', async () => {
+        const mockData = [{display_name: 'Cruncyroll', name: '1234', icon_img: 'url:test'},{display_name: 'Pics', name: '5678', icon_img: 'url:testv2'}];
+
+        global.fetch = jest.fn(() => 
+            Promise.resolve({ok: true, json: () => Promise.resolve(mockData)})
+        );
+        const dispatch = jest.fn();
+        const getState = jest.fn(() => ({}));
+
+        await loadSubredditsList()(dispatch, getState, undefined);
+
+        expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
+            type: loadSubredditsList.pending.type
+        }));
+
+        expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
+            type: loadSubredditsList.fulfilled.type,
+            payload: mockData
+        }));
+    })
+    it('dispatches rejected when API fails', async () => {
+        global.fetch = jest.fn(() => Promise.reject(new Error('Network error')));
+
+        const dispatch = jest.fn();
+        const getState = jest.fn(() => ({}));
+
+        await loadSubredditsList()(dispatch,getState,undefined);
+
+        expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
+            type: loadSubredditsList.pending.type
+        }));
+
+        expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
+            type: loadSubredditsList.rejected.type,
+            error: expect.any(Object)
+        }))
+    })
+});
+
+describe('loadSubredditIcons thunk', () => {
+    it('dispatches fulfilled when API resolves', async () => {
+        const mockData = [{icon:'url:test', name:'reactjs'},{icon:'url:testv2', name:'pics'}]; 
+
+        global.fetch = jest.fn(() => 
+            Promise.resolve({ok: true, json: () => Promise.resolve(mockData)})
+        )
+        const dispatch = jest.fn();
+        const getState = jest.fn(() => ({}))
+
+        await loadSubredditIcons(['reactjs', 'pics'])(dispatch,getState,undefined);
+
+        expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
+            type: loadSubredditIcons.pending.type
+        }));
+
+        expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
+            type: loadSubredditIcons.fulfilled.type,
+            payload: mockData
+        }))
+    })
+})
