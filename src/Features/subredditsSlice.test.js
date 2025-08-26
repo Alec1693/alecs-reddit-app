@@ -135,11 +135,27 @@ describe('loadSubredditsList thunk', () => {
 
 describe('loadSubredditIcons thunk', () => {
     it('dispatches fulfilled when API resolves', async () => {
-        const mockData = [{icon:'url:test', name:'reactjs'},{icon:'url:testv2', name:'pics'}]; 
+        const mockResponse = (icon) => ({
+            data: {
+                icon_img: icon,
+                community_icon: ""
+            }
+        }); 
 
-        global.fetch = jest.fn(() => 
-            Promise.resolve({ok: true, json: () => Promise.resolve(mockData)})
-        )
+       global.fetch = jest.fn()
+        .mockResolvedValueOnce({
+            ok: true,
+            json: () => Promise.resolve(mockResponse("url:test"))
+        })
+         .mockResolvedValueOnce({
+            ok: true,
+            json: () => Promise.resolve(mockResponse("url:testv2"))
+         })
+
+         const expectedPayload = [
+            { name: "reactjs", icon: "url:test" },
+            { name: "pics", icon: "url:testv2" }
+          ];
         const dispatch = jest.fn();
         const getState = jest.fn(() => ({}))
 
@@ -151,7 +167,23 @@ describe('loadSubredditIcons thunk', () => {
 
         expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
             type: loadSubredditIcons.fulfilled.type,
-            payload: mockData
+            payload: expectedPayload
         }))
+    })
+    it('dispatches rejected when API fails', async () => {
+        global.fetch = jest.fn(() => Promise.reject(new Error('Network error')));
+
+        const dispatch = jest.fn();
+        const getState = jest.fn(() => ({}));
+
+        await loadSubredditIcons(['reactjs', 'pics'])(dispatch,getState,undefined);
+
+        expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
+            type: loadSubredditIcons.pending.type
+        }));
+        expect(dispatch).toHaveBeenCalledWith(expect.objectContaining({
+            type: loadSubredditIcons.rejected.type,
+            error: expect.any(Object)
+        }));
     })
 })
