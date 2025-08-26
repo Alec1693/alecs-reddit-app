@@ -21,7 +21,7 @@ export default function SubRedditContainer(){
     useEffect(() => {
         dispatch(loadSubredditsList())
         dispatch(loadSubredditIcons(names))
-    },[])
+    },[dispatch, names])
 
     if(Object.entries(subs).length <= 0){
         return (
