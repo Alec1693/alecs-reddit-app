@@ -26,12 +26,12 @@ export const loadSubredditIcons = createAsyncThunk(
         try{
             const iconData = await Promise.all(
                 subNames.map(async (name) => {
-                    const res = await fetch(`https://www.reddit.com/r/${subreddit}/about.json`);
+                    const res = await fetch(`https://www.reddit.com/r/${name}/about.json`);
                     if (!res.ok) throw new Error(`Failed to fetch ${name}`);
                     const json = await res.json();
                     const { icon_img, community_icon } = json.data;
                     const rawIcon = community_icon || icon_img || '';
-                    const icon = rawIcon.split('?')[0].replace(/&amp;/g, '&') || null;
+                    const icon = rawIcon ? rawIcon.split('?')[0].replace(/&amp;/g, '&') : null;
                     return { name, icon}
                 })
             );
