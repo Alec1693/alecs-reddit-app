@@ -11,11 +11,7 @@ export async function handler(event, context) {
   }
 
   try {
-    const response = await fetch(`https://www.reddit.com/r/${subreddit}.json`, {
-      headers: {
-        "User-Agent": "alecs-minimal-reddit-app/0.1 by u/Alec1693"
-      }
-    });
+    const response = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
 
     if (!response.ok) {
       console.error(`Reddit API returned status ${response.status}`);
