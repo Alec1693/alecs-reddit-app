@@ -5,7 +5,7 @@ export const loadHomePageFeed = createAsyncThunk(
     'posts/loadHomePageFeed',
     async(subreddit, {dispatch, getState}) => {
         try{
-            const response = await fetch(`/.netlify/functions/fetch-subreddit?subreddit=reactjs`)
+            const response = await fetch(`/.netlify/functions/fetch-subreddit?subreddit=${subreddit}`)
 
             if(!response.ok){
                 throw new Error(`HTTP error! status: ${response.status}`)
