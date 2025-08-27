@@ -13,7 +13,7 @@ export async function handler(event, context) {
   try {
     const response = await fetch(`https://www.reddit.com/r/${subreddit}.json`, {
       headers: {
-        "User-Agent": "alecs-minimal-reddit-app/0.1 by Alec1693"
+        "User-Agent": "alecs-minimal-reddit-app/0.1 by u/Alec1693"
       }
     });
 
