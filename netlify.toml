@@ -3,11 +3,6 @@
     publish = "build"
 
 [[redirects]]
-  from = "/api/:subreddit"
-  to = "/.netlify/functions/subreddit/:subreddit"
-  status = 200
-
-[[redirects]]
   from = "/api/reddit-sub-icons/:subreddit"
   to = "/.netlify/functions/reddit-sub-icons/:subreddit"
   status = 200
