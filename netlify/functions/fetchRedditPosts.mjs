@@ -19,7 +19,7 @@ export async function handler(event, context) {
           `${process.env.REDDIT_CLIENT_ID}:${process.env.REDDIT_CLIENT_SECRET}`
         ).toString("base64"),
         "Content-Type": "application/x-www-form-urlencoded",
-        "User-Agent": process.env.REDDIT_USER_AGENT || "MinimalRedditApp:v1.0 (by /u/yourusername)"
+        "User-Agent": process.env.REDDIT_USER_AGENT
       },
       body: "grant_type=client_credentials"
     });

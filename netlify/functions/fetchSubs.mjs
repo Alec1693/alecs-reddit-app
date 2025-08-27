@@ -1,6 +1,4 @@
 export async function handler(event, context) {
-  const { subreddit } = event.pathParameters;
-
   try {
     // Step 1: Get access token
     const authResponse = await fetch("https://www.reddit.com/api/v1/access_token", {
@@ -13,8 +11,7 @@ export async function handler(event, context) {
           ).toString("base64"),
         "Content-Type": "application/x-www-form-urlencoded",
         "User-Agent":
-          process.env.REDDIT_USER_AGENT ||
-          "MinimalRedditApp:v1.0 (by /u/yourusername)",
+          process.env.REDDIT_USER_AGENT
       },
       body: "grant_type=client_credentials",
     });
@@ -34,15 +31,18 @@ export async function handler(event, context) {
 
     const accessToken = authData.access_token;
 
-    // Step 2: Fetch subreddit about data
-    const response = await fetch(`https://oauth.reddit.com/r/${subreddit}/about`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        "User-Agent":
-          process.env.REDDIT_USER_AGENT ||
-          "MinimalRedditApp:v1.0 (by /u/yourusername)",
-      },
-    });
+    // Step 2: Fetch popular subreddits with OAuth
+    const response = await fetch(
+      "https://oauth.reddit.com/subreddits/popular?limit=25",
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "User-Agent":
+            process.env.REDDIT_USER_AGENT ||
+            "MinimalRedditApp:v1.0 (by /u/yourusername)",
+        },
+      }
+    );
 
     if (!response.ok) {
       console.error(`Reddit API returned status ${response.status}`);
@@ -53,13 +53,7 @@ export async function handler(event, context) {
     }
 
     const json = await response.json();
-
-    const iconData = {
-      display_name: json.data.display_name,
-      icon_img: json.data.icon_img || json.data.community_icon || null,
-      title: json.data.title,
-      subscribers: json.data.subscribers,
-    };
+    const subreddits = json.data.children.map((child) => child.data);
 
     return {
       statusCode: 200,
@@ -67,7 +61,7 @@ export async function handler(event, context) {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "Content-Type",
       },
-      body: JSON.stringify(iconData),
+      body: JSON.stringify(subreddits),
     };
   } catch (err) {
     console.error("Error fetching Reddit data:", err);
