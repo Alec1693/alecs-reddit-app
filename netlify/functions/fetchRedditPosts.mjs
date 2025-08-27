@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 
 export async function handler(event, context) {
-  const { subreddit } = event.pathParameters;
+  const subreddit = event.queryStringParameters.subreddit;
 
   try {
     const response = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
