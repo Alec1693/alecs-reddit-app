@@ -4,7 +4,11 @@ export async function handler(event, context) {
   const subreddit = event.queryStringParameters.subreddit;
 
   try {
-    const response = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
+    const response = await fetch(`https://www.reddit.com/r/${subreddit}.json`, 
+      {headers: {
+                    "User-Agent": "alecs-minimal-reddit-app/0.1 by Alec1693"
+                }}
+    );
 
     if (!response.ok) {
       console.error(`Reddit API returned status ${response.status}`);
