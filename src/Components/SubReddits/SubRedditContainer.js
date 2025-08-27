@@ -19,9 +19,10 @@ export default function SubRedditContainer(){
     const dispatch = useDispatch();
 
     useEffect(() => {
+        if(names.length <= 0)
         dispatch(loadSubredditsList())
         dispatch(loadSubredditIcons(names))
-    },[])
+    },[dispatch, names])
 
     if(Object.entries(subs).length <= 0){
         return (
