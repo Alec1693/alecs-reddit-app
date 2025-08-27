@@ -1,5 +1,5 @@
 export async function handler(event, context) {
-  const { subreddit } = event.pathParameters;
+  const { subreddit } = event.queryStringParameters;
 
   try {
     // Step 1: Get access token
